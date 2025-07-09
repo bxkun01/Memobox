@@ -51,6 +51,11 @@ class ProfileView(APIView):
         profile = request.user.profile
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+    
+
+class NoteDetail(generics.RetrieveAPIView):
+    queryset = Notes.objects.all()
+    serializer_class = NoteSerializer
 
 
     

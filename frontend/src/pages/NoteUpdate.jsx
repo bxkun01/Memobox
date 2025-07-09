@@ -9,6 +9,17 @@ const NoteUpdate = () => {
 
   const { noteId } = useParams()
 
+  useEffect(()=>{
+    api.get(`/api/notes/${noteId}/`)
+    .then(res=>res.data)
+    .then(data=>{
+      setTitle(data.title)
+      setContent(data.content)
+    })
+    .catch(err=>console.log(err))
+
+  },[])
+
 
   const updateNote = (e) => {
     e.preventDefault();

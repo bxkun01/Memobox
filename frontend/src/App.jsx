@@ -8,6 +8,7 @@ import ProtectedRoutes from './components/ProtectedRoutes'
 import Navbar from './components/navbar'
 import NoteCreate from './pages/NoteCreate'
 import NoteUpdate from './pages/NoteUpdate'
+import Layout from './layout/Layout'
 
 function Logout() {
   localStorage.clear()
@@ -21,8 +22,25 @@ function RegisterAndLogout() {
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <ProtectedRoutes><Home /></ProtectedRoutes>,
+    path: '/',
+    element: <Layout />,       
+    children: [                  
+      { path: '', element: <ProtectedRoutes><Home /></ProtectedRoutes> },
+      {
+        path: 'note/create/',
+        element: <NoteCreate />
+      },
+      {
+        path: '*',
+        element: <NotFound />
+      },
+      {
+        path: 'note/update/:noteId',
+        element: <NoteUpdate />
+
+
+      },
+    ],
   },
   {
     path: "/login",
@@ -36,22 +54,8 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterAndLogout />
   },
-  {
-    path: '*',
-    element: <NotFound />
-  },
-  {
-    path: 'note/create/',
-    element: <NoteCreate />
-  },
-  {
-    path: 'note/update/:noteId',
-    element: <NoteUpdate />
-
-
-  }
-
 ]);
+
 
 
 function App() {

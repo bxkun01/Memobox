@@ -27,7 +27,7 @@ const NoteCreate = () => {
         <div
             className="min-h-screen bg-cover bg-center flex items-center justify-center p-5 text-white"
             style={{
-                backgroundImage: "url('https://w.wallhaven.cc/full/dg/wallhaven-dgzj9o.jpg')",
+                backgroundImage: "url('https://w.wallhaven.cc/full/6o/wallhaven-6ozkzl.jpg')",
             }}
         >
             <form

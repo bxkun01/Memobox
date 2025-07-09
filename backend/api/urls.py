@@ -6,5 +6,6 @@ urlpatterns=[
     path('notes/delete/<int:pk>/', views.NoteDelete.as_view(),name='delete-note'),
     path('notes/update/<int:pk>/', views.NoteUpdate.as_view(),name='note-update'),
     path('profile/', views.ProfileView.as_view(), name='user-profile'),
+    path('notes/<int:pk>/', views.NoteDetail.as_view(), name='note-detail')
 
 ]
