@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { Underline } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Form = ({ route, method }) => {
   const [username, setUsername] = useState("");
+  const [email, setEmail]=useState("")
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ const Form = ({ route, method }) => {
     setLoading(true);
 
     try {
-      const res = await api.post(route, { username, password });
+      const res = await api.post(route, { username,email, password });
 
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
@@ -51,6 +54,18 @@ const Form = ({ route, method }) => {
           required
         />
 
+        {method === "register" && (
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+
+        )}
+
         <input
           type="password"
           placeholder="Password"
@@ -63,14 +78,22 @@ const Form = ({ route, method }) => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 text-white font-medium rounded-lg transition duration-300 ${
-            loading
-              ? "bg-blue-300 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
+          className={`w-full py-2 text-white font-medium rounded-lg transition duration-300 ${loading
+            ? "bg-blue-300 cursor-not-allowed"
+            : "bg-blue-500 hover:bg-blue-600"
+            }`}
         >
           {loading ? "Loading..." : name}
         </button>
+        {method === "login" ? (
+          <div className="flex gap-2">
+            <span>Don't have an account?</span>
+            <Link to="/register" className="hover:underline">Register</Link>
+          </div>) :
+          <div className="flex gap-2">
+            <span>Already have an account?</span>
+            <Link to="/login" className="hover:underline">Login</Link>
+          </div>}
       </form>
     </div>
   );

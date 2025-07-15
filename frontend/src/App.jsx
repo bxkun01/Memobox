@@ -5,10 +5,10 @@ import Home from './pages/Home'
 import NotFound from './pages/404'
 import Register from './pages/Register'
 import ProtectedRoutes from './components/ProtectedRoutes'
-import Navbar from './components/navbar'
 import NoteCreate from './pages/NoteCreate'
 import NoteUpdate from './pages/NoteUpdate'
 import Layout from './layout/Layout'
+import Profile from './pages/Profile'
 
 function Logout() {
   localStorage.clear()
@@ -23,23 +23,25 @@ function RegisterAndLogout() {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,       
-    children: [                  
+    element: <Layout />,
+    children: [
       { path: '', element: <ProtectedRoutes><Home /></ProtectedRoutes> },
       {
         path: 'note/create/',
         element: <NoteCreate />
       },
-      {
-        path: '*',
-        element: <NotFound />
-      },
+
       {
         path: 'note/update/:noteId',
         element: <NoteUpdate />
 
 
       },
+      {
+        path:'profile/',
+        element:  <Profile/>
+      },
+      
     ],
   },
   {
@@ -53,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterAndLogout />
+  },
+  {
+    path: '*',
+    element: <NotFound />
   },
 ]);
 

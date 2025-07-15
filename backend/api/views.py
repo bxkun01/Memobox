@@ -4,8 +4,9 @@ from  .serializers import UserSerializer, NoteSerializer, ProfileSerializer
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Notes
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import permissions
+from .serializers import ProfileSerializer
 
 
 
@@ -41,16 +42,14 @@ class NoteUpdate(generics.UpdateAPIView):
         user= self.request.user
         return Notes.objects.get(pk=self.kwargs['pk'], author=user)
     
-from rest_framework import generics, permissions
-from rest_framework.response import Response
 
-class ProfileView(APIView):
+class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ProfileSerializer
+    parser_classes = [MultiPartParser, FormParser]  # Required for file uploads
 
-    def get(self, request):
-        profile = request.user.profile
-        serializer = ProfileSerializer(profile)
-        return Response(serializer.data)
+    def get_object(self):
+        return self.request.user.profile
     
 
 class NoteDetail(generics.RetrieveAPIView):

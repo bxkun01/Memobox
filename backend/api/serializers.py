@@ -7,7 +7,7 @@ from user.models import Profile
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "password"]
+        fields = ["id", "username", "password","email"]
         extra_kwargs = {
             "password": {"write_only": True}
         }  # Password can be received but won't be shown in responses
@@ -26,8 +26,9 @@ class NoteSerializer(serializers.ModelSerializer):
         }
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', read_only=True)
-    email= serializers.EmailField(source='user.email')
+    username= serializers.CharField(source='user.username', read_only=True)
+    profile_picture = serializers.ImageField(required=False)
+    email=serializers.EmailField(source='user.email', read_only=True)
     class Meta:
         model = Profile
-        fields = ['username', 'bio', 'profile_picture', 'created_at','email']
+        fields = ['username','bio', 'profile_picture', 'created_at','email']
