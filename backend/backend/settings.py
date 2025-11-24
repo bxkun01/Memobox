@@ -6,13 +6,14 @@ from pathlib import Path
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-m9hsod&2w^a6*gon3*7j(hks#@o!8#kbx5c8^pqgfp10!-pb7s'
-DEBUG = True
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -58,7 +59,7 @@ SIMPLE_JWT = {
 # APPS
 # =============================
 INSTALLED_APPS = [
-    'corsheaders',   # MUST be above Django apps
+    'corsheaders',   
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,10 +72,10 @@ INSTALLED_APPS = [
 ]
 
 # =============================
-# MIDDLEWARE  (IMPORTANT ORDER)
+# MIDDLEWARE
 # =============================
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',   # MUST BE FIRST
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -107,17 +108,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # =============================
-# POSTGRES DATABASE
+# POSTGRES DATABASE (CHORED-READY)
 # =============================
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PWD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT"),
-    }
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 # =============================
