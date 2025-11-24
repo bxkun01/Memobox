@@ -1,9 +1,8 @@
 import axios from 'axios'
 import { ACCESS_TOKEN } from './constants'
 
-const apiUrl="https://752ff785-740c-4c95-a52d-d310c3974530.e1-us-east-azure.choreoapps.dev/"
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: "https://7a8f4238-7240-410e-9d8e-eff9cd8cfddb.e1-us-east-azure.choreoapps.dev/"
 })
 
 api.interceptors.request.use(
@@ -13,7 +12,6 @@ api.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
-
     },
     (error) => {
         return Promise.reject(error)
