@@ -19,7 +19,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")  # NEVER hardcode
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    ".choreoapps.dev",
+    "memobox-rcp8.onrender.com",
     "memoboxx.vercel.app",
     "localhost",
     "127.0.0.1",
@@ -33,7 +33,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
     "https://memoboxx.vercel.app",
-    "https://7a8f4238-7240-410e-9d8e-eff9cd8cfddb.e1-us-east-azure.choreoapps.dev/"
+   "https://memobox-rcp8.onrender.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
